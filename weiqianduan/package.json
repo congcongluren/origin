@@ -1,0 +1,16 @@
+{
+  "name": "weiqianduan",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "rollup -c -w"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "rollup": "^2.39.0",
+    "rollup-plugin-serve": "^1.1.0"
+  }
+}
