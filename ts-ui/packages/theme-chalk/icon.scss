@@ -1,0 +1,303 @@
+@import "./common/var.scss";
+@font-face {
+  font-family: "g-ui-icons";
+  src: 
+  url("./fonts/iconfont.woff?t=1616288174321") format("woff"), 
+  url("./fonts/iconfont.ttf?t=1616288174321") format("truetype"); /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+}
+
+[class^="#{$namespace}-icon-"] {
+  font-family: "g-ui-icons" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.g-icon-film:before {
+  content: "\e69b";
+}
+
+.g-icon-fabulous:before {
+  content: "\e69c";
+}
+
+.g-icon-file:before {
+  content: "\e69d";
+}
+
+.g-icon-folder-close:before {
+  content: "\e69e";
+}
+
+.g-icon-filter:before {
+  content: "\e69f";
+}
+
+.g-icon-good:before {
+  content: "\e6a0";
+}
+
+.g-icon-hide:before {
+  content: "\e6a1";
+}
+
+.g-icon-home:before {
+  content: "\e6a2";
+}
+
+.g-icon-history:before {
+  content: "\e6a3";
+}
+
+.g-icon-file-open:before {
+  content: "\e6a4";
+}
+
+.g-icon-forward:before {
+  content: "\e6a5";
+}
+
+.g-icon-import:before {
+  content: "\e6a6";
+}
+
+.g-icon-image-text:before {
+  content: "\e6a7";
+}
+
+.g-icon-keyboard-26:before {
+  content: "\e6a8";
+}
+
+.g-icon-keyboard-9:before {
+  content: "\e6a9";
+}
+
+.g-icon-link:before {
+  content: "\e6aa";
+}
+
+.g-icon-3column:before {
+  content: "\e663";
+}
+
+.g-icon-column-4:before {
+  content: "\e664";
+}
+
+.g-icon-add:before {
+  content: "\e665";
+}
+
+.g-icon-add-circle:before {
+  content: "\e666";
+}
+
+.g-icon-adjust:before {
+  content: "\e667";
+}
+
+.g-icon-arrow-up-circle:before {
+  content: "\e668";
+}
+
+.g-icon-arrow-right-circle:before {
+  content: "\e669";
+}
+
+.g-icon-arrow-down:before {
+  content: "\e66a";
+}
+
+.g-icon-ashbin:before {
+  content: "\e66b";
+}
+
+.g-icon-arrow-right:before {
+  content: "\e66c";
+}
+
+.g-icon-browse:before {
+  content: "\e66d";
+}
+
+.g-icon-bottom:before {
+  content: "\e66e";
+}
+
+.g-icon-back:before {
+  content: "\e66f";
+}
+
+.g-icon-bad:before {
+  content: "\e670";
+}
+
+.g-icon-arrow-double-left:before {
+  content: "\e671";
+}
+
+.g-icon-arrow-left-circle:before {
+  content: "\e672";
+}
+
+.g-icon-arrow-double-right:before {
+  content: "\e673";
+}
+
+.g-icon-caps-lock:before {
+  content: "\e674";
+}
+
+.g-icon-camera:before {
+  content: "\e675";
+}
+
+.g-icon-chart-bar:before {
+  content: "\e676";
+}
+
+.g-icon-attachment:before {
+  content: "\e677";
+}
+
+.g-icon-code:before {
+  content: "\e678";
+}
+
+.g-icon-close:before {
+  content: "\e679";
+}
+
+.g-icon-check-item:before {
+  content: "\e67a";
+}
+
+.g-icon-calendar:before {
+  content: "\e67b";
+}
+
+.g-icon-comment:before {
+  content: "\e67c";
+}
+
+.g-icon-column-vertical:before {
+  content: "\e67d";
+}
+
+.g-icon-column-horizontal:before {
+  content: "\e67e";
+}
+
+.g-icon-complete:before {
+  content: "\e67f";
+}
+
+.g-icon-chart-pie:before {
+  content: "\e680";
+}
+
+.g-icon-cry:before {
+  content: "\e681";
+}
+
+.g-icon-customer-service:before {
+  content: "\e682";
+}
+
+.g-icon-delete:before {
+  content: "\e683";
+}
+
+.g-icon-direction-down:before {
+  content: "\e684";
+}
+
+.g-icon-copy:before {
+  content: "\e685";
+}
+
+.g-icon-cut:before {
+  content: "\e686";
+}
+
+.g-icon-data-view:before {
+  content: "\e687";
+}
+
+.g-icon-direction-down-circle:before {
+  content: "\e688";
+}
+
+.g-icon-direction-right:before {
+  content: "\e689";
+}
+
+.g-icon-direction-up:before {
+  content: "\e68a";
+}
+
+.g-icon-discount:before {
+  content: "\e68b";
+}
+
+.g-icon-direction-left:before {
+  content: "\e68c";
+}
+
+.g-icon-download:before {
+  content: "\e68d";
+}
+
+.g-icon-electronics:before {
+  content: "\e68e";
+}
+
+.g-icon-drag:before {
+  content: "\e68f";
+}
+
+.g-icon-elipsis:before {
+  content: "\e690";
+}
+
+.g-icon-export:before {
+  content: "\e691";
+}
+
+.g-icon-explain:before {
+  content: "\e692";
+}
+
+.g-icon-edit:before {
+  content: "\e693";
+}
+
+.g-icon-eye-close:before {
+  content: "\e694";
+}
+
+.g-icon-email:before {
+  content: "\e695";
+}
+
+.g-icon-error:before {
+  content: "\e696";
+}
+
+.g-icon-favorite:before {
+  content: "\e697";
+}
+
+.g-icon-file-common:before {
+  content: "\e698";
+}
+
+.g-icon-file-delete:before {
+  content: "\e699";
+}
+
+.g-icon-file-add:before {
+  content: "\e69a";
+}
