@@ -1,36 +1,47 @@
 <template>
-  <g-button-group>
-    <g-button type="primary" icon="g-icon-arrow-left-bold">上一页</g-button>
-    <g-button type="primary">
-      下一页
-      <i class="g-icon-arrow-right g-icon--right"></i>
-    </g-button>
-  </g-button-group>
+  <div>
+    <g-row>
+      <g-col :span="6">
+        <div style="background:red">111</div>
+      </g-col>
+      <g-col :span="6" :offset="6">
+        <div style="background:green">222</div>
+      </g-col>
+      <g-col :span="6">
+        <div style="background:pink">333</div>
+      </g-col>
+    </g-row>
+    <hr />
+    <g-row :gutter="10">
+      <g-col :span="8">
+        <div style="background:red">111</div>
+      </g-col>
+      <g-col :span="8">
+        <div style="background:green">222</div>
+      </g-col>
+      <g-col :span="8">
+        <div style="background:pink">333</div>
+      </g-col>
+    </g-row>
+    <hr />
+    <g-row justify="space-around">
+      <g-col :span="3">
+        <div style="background:red">111</div>
+      </g-col>
+      <g-col :span="3">
+        <div style="background:green">222</div>
+      </g-col>
+      <g-col :span="3">
+        <div style="background:pink">333</div>
+      </g-col>
+    </g-row>
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 
-const useButton = () => {
-  const buttonloading = ref(true);
-  const buttonClick = () => {
-    console.log("handle-click");
-  };
-
-  setTimeout(() => {
-    buttonloading.value = false;
-  }, 1000);
-  return {
-    buttonClick,
-    buttonloading,
-  };
-};
-
 export default defineComponent({
-  setup() {
-    return {
-      ...useButton(),
-    };
-  },
+  setup() {}
 });
 </script>
