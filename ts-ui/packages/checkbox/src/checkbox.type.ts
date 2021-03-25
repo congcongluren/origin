@@ -1,3 +1,5 @@
+import { ComputedRef } from "vue";
+
 export interface ICheckboxProps {
   indeterminate?: boolean,
   checked?: boolean,
@@ -5,4 +7,10 @@ export interface ICheckboxProps {
   disabled?: boolean,
   label?: string | boolean| number,
   modelValue?: string | boolean| number
+}
+
+export interface ICheckboxGroupProvide {
+  modelValue?: ComputedRef,
+  changeEvent?: (val: unknown)=>void,
+  name?: string
 }

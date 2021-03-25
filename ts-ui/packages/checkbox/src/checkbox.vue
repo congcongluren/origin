@@ -1,17 +1,25 @@
 <template>
   <div class="g-checkbox">
     <span class="g-checkbox__input">
-      <input type="checkbox" v-model="model" />
+      <input
+        type="checkbox"
+        v-model="model"
+        @change="handleChange"
+        :checked="isChecked"
+        :name="name"
+        :disabled="disabled"
+        :indeterminate="indeterminate"
+        :value="label"
+      />
     </span>
     <span class="g-checkbox-loabel">
-      <slot></slot>
+      <slot>{{label}}</slot>
     </span>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-
 import { useCheckbox } from "./useCheckbox";
 
 export default defineComponent({
@@ -25,9 +33,9 @@ export default defineComponent({
     label: [String, Number, Boolean],
     modelValue: [String, Number, Boolean],
   },
-  emits: ['update:modelValue'],
+  emits: ["update:modelValue", "change"],
   setup(props) {
-    return useCheckbox(props)
+    return useCheckbox(props);
   },
 });
 </script>
