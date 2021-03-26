@@ -6,7 +6,9 @@ import Row from "@g-ui/row";
 import Col from "@g-ui/col";
 import Checkbox from "@g-ui/checkbox";
 import CheckboxGroup from "@g-ui/checkbox-group";
-import Transfer from '@g-ui/transfer'
+import Transfer from '@g-ui/transfer';
+import Message from '@g-ui/message';
+import Dialog from '@g-ui/dialog';
 
 const components = [
   Button,
@@ -16,7 +18,9 @@ const components = [
   Col,
   Checkbox,
   CheckboxGroup,
-  Transfer
+  Transfer,
+  Message,
+  Dialog
 ];
 
 const install = (app: App): void => {

@@ -71,9 +71,7 @@ export default defineComponent({
           currentValue.splice(index, 1);
         }
       });
-      console.log(currentValue);
-      
-      emit('update:modelVlaue', currentValue)
+      emit('update:modelValue', currentValue)
     }
     const addToRight = () => {
     }

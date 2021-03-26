@@ -22,8 +22,11 @@ export const useCheck = (props: ITransferPanelProps, panelState: IPanelState) =>
     // 监听checks数据变化，决定全选，反选状态
     let checkKeys = checkableData.value.map(item => item[keyProp.value])
     panelState.allChecked = checkKeys.length > 0 && checkKeys.every(key => panelState.checked.includes(key));
-
     emit('checked-change', panelState.checked);
+  })
+
+  watch(()=> props.data, val =>{
+    panelState.checked = [];
   })
 
   return {
