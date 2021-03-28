@@ -1,81 +1,55 @@
-import { getCursor, getSelection, NodeTypes } from "../util";
-import { parseElement } from "./parseElement";
-import { parseInterpolation } from "./parseInterpolation";
-import { parseText } from "./parseText";
+import { baseParse } from "./parse";
+import { transfrom, getBaseTransformPreset } from "./transform";
 
-let n = 0;
-
-function isEnd(context) { // 是不是解析完成， context。source === ‘’
-  const source = context.source;
-
-  if (source.startsWith('</')) {
-    return true
+function createCodegenContext(ast) {
+  const newLine = (n) => {
+    context.push('\n' + '  '.repeat(n))
   }
-
-  return !source;
-}
-
-export function parseChildren(context) { // 根据内容分发解析方法
-  const nodes = [];
-
-  while (!isEnd(context)) {
-    const s = context.source; // 内容
-    let node;
-    if (s[0] === '<') { // 标签
-      node = parseElement(context);
-      // break
-    } else if (s.startsWith('{{')) { // 表达式
-      node = parseInterpolation(context);
-    } else {
-      node = parseText(context);
+  const context = {
+    code: ``, // 拼的结果
+    push(c) {
+      context.code += c
+    },
+    indentLevel: 0,
+    newLine() {
+      newLine(context.indentLevel)
+    },
+    indent () {
+      newLine(++context.indentLevel);
+    },
+    deindent() {
+      newLine(--context.indentLevel)
     }
-    nodes.push(node);
-    if (++n > 100) {
-      console.error('死循环');
-      break;
-    };
   }
 
-  nodes.forEach((node, index) => {
-    if (node.type === NodeTypes.TEXT) {
-      if (!/[^ \t\r\n]/.test(node.content)) {
-        node[index] = null;
-      } else {
-        node.content = node.content.replace(/[ \t\r\n]+/g, ' ')
-      }
-    }
-  })
-
-  return nodes.filter(Boolean);
+  return context;
 }
 
-function createParseContext(content) {
-  return {
-    line: 1,
-    column: 1,
-    offset: 0,
-    source: content, // source会不停的移除，为空的时候解析完毕
-    originalSource: content, // 传入的内容
-  }
-}
-function createRoot(children, loc ) {
-  return {
-    type: NodeTypes.ROOT,
-    children,
-    loc
-  }
-}
-function baseParse(content) {
-  // 标识节点信息
-  // 解析一部分，移除一部分
-  const context = createParseContext(content);
-  const start = getCursor(context);
-  return createRoot(parseChildren(context), getSelection(context, start));
+function generate(ast){
+  const context = createCodegenContext(ast)
+  const { push, newLine, indent, deindent } = context;
+  push(`cosnt _Vue = Vue`);
+  newLine();
+  push(`return function render(_ctx){`);
+  indent();
+
+  deindent();
+  push(`}`);
+
+
+  console.log(ast);
+  
+
+  return context.code
 }
 
 export function baseCompile(template) {
   // 将模版转换成ast语法树
   const ast = baseParse(template);
+  const nodeTransforms = getBaseTransformPreset(); // 每遍历一次都会调用里面的方法
+  // 将ast语法进行转化
+  transfrom(ast, nodeTransforms);
 
-  return ast
+
+  return generate(ast); // 在生成的过程中，生成一个字符串拼接后生成的方法
 }

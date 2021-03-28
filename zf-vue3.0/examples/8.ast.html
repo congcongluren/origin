@@ -15,7 +15,7 @@
     let {
       baseCompile
     } = VueCompilerDOM;
-    let ast = baseCompile(`    hello   <a>      </a>`);
+    let ast = baseCompile(`hello {{name}} hahah <div>hellow{{age}}</div> world {{S}}`);
     console.log('ast', ast);
   </script>
 </body>
