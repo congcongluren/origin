@@ -51,6 +51,12 @@ class Promise {
     this.onRejectedCallbacks = [];
 
     const resolve = (value) => {
+
+      if (value instanceof Promise) {
+        return value.then(resolve, reject);
+      }
+
+
       if (this.status === PENDING) {
         this.value = value
         this.status = FULFILLED;
@@ -61,6 +67,7 @@ class Promise {
     }
 
     const reject = (reason) => {
+
       if (this.status === PENDING) {
         this.reason = reason
         this.status = REJECTED;
@@ -150,6 +157,49 @@ class Promise {
     })
 
     return promise2;
+  }
+
+
+  static resolve(val) {
+    return new Promise((resolve, reject) => {
+      resolve(val)
+    })
+  }
+  static reject(val) {
+    return new Promise((resolve, reject) => {
+      reject(val)
+    })
+  }
+
+  catch (errorFn) {
+    return this.then(null, errorFn)
+  }
+
+  static all(promises) {
+    return new Promise((resolve, reject) => {
+      let result = [];
+      let times = 0
+
+      const processSuccess = (index, val) => {
+        result[index] = val;
+        if (++times === promises.length) {
+          resolve(result);
+        }
+      }
+
+      for (let i = 0; i < promises.length; i++) {
+        const p = promises[i];
+        if (promises && typeof p.then === 'function') {
+          p.then((data) => {
+            processSuccess(i, data)
+          }, reject)
+        } else {
+          processSuccess(i, p)
+        }
+      }
+
+
+    })
   }
 }
 
