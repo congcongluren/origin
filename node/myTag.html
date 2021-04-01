@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" href="../../assets/css/common.css">
+    <title>Custom Elements - browser-support</title>
+    <style>
+      browser-support {
+        display: block;
+      }
+    </style>
+  </head>
+    <browser-support 
+    id="browserSupport" 
+    chrome-version="64+" opera-version="8.3+" firefox-version="58+" safari-version="6.1+" ie-version="11+" style="width: 600px;"></browser-support>
+  <body>
+  </body>
+  <script>
+  class browserSupport extends HTMLElement {
+    static get observedAttributes () {
+      return ['chrome-version', 'opera-version', 'firefox-version', 'safari-version', 'ie-version']
+    }
+    constructor () {
+      super();
+      this.render();
+    }
+    render () {
+      var shadowRoot = this.shadowRoot || this.attachShadow({mode: 'open'});
+      var ul = document.createElement('ul');
+      ul.style.listStyle = 'none';
+      ul.style.display = 'flex';
+      ul.style.width = '100%';
+      const browserList = [
+        {
+          text: 'Chrome',
+          img: '../../assets/img/chrome_189x189.png',
+          version: this.chromeVersion
+        },
+        {
+          text: 'Opera',
+          img: '../../assets/img/opera.png',
+          version: this.operaVersion
+        },
+        {
+          text: 'Firefox',
+          img: '../../assets/img/ff_189x189.png',
+          version: this.firefoxVersion
+        },
+        {
+          text: 'Safari',
+          img: '../../assets/img/safari_189x189.png',
+          version: this.safariVersion
+        },
+        {
+          text: 'IE',
+          img: '../../assets/img/IE8_189x189.png',
+          version: this.ieVersion
+        }
+      ]
+      var liWidth = (100 / browserList.length) + '%';
+      for (let i = 0; i < browserList.length; i++) {
+        var li = document.createElement('li');
+        li.style.textAlign = 'center';
+        li.style.width = liWidth
+        let logoImg = document.createElement('img');
+        logoImg.src = browserList[i].img;
+        logoImg.style.width = '60px';
+        logoImg.style.height = '60px';
+        li.appendChild(logoImg);
+
+        let p1 = document.createElement('p');
+        p1.style.color = '#3a3a3a';
+        p1.style.fontSize = 14;
+        p1.innerText = browserList[i].text;
+        li.appendChild(p1);
+
+        let p2 = document.createElement('p');
+        p2.style.color = '#4a4a4a';
+        p2.style.fontSize = 12;
+        p2.innerText = browserList[i].version;
+        li.appendChild(p2);
+
+        ul.appendChild(li)
+      }
+      shadowRoot.innerHTML = ""
+      shadowRoot.appendChild(ul);
+    }
+    attributeChangedCallback (attr, oldValue, newValue) {
+      this.render()
+      console.log('attributeChangedCallback trigger')
+    }
+    disconnectedCallback () {
+      console.log('disconnectedCallback')
+    }
+    get chromeVersion () {
+      return this.getAttribute('chrome-version') || ''
+    }
+    get operaVersion () {
+      return this.getAttribute('opera-version') || ''
+    }
+    get firefoxVersion () {
+      return this.getAttribute('firefox-version') || ''
+    }
+    get safariVersion () {
+      return this.getAttribute('safari-version') || ''
+    }
+    get ieVersion () {
+      return this.getAttribute('ie-version') || ''
+    }
+  }
+  customElements.define('browser-support', browserSupport);
+  </script>
+</html>
