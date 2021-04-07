@@ -1,0 +1,26 @@
+{
+  "name": "module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "1.module.js",
+  "scripts": {
+    "mime": "mime a.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "mime": "^2.5.2"
+  },
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "jquery": "^2.2.4",
+    "user": "0.0.0"
+  },
+  "peerDependencies": {
+    "bootstrap": "^4.6.0"
+  },
+  "bundleDependencies": [
+    "bootstrap"
+  ]
+}
