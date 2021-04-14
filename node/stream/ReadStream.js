@@ -77,3 +77,41 @@ class ReadStream extends EventEmitter {
   }
 }
 module.exports = ReadStream;
+
+
+
+
+
+
+
+
+
+// const fs = require('fs');
+// const path = require('path');
+// const {
+//   Readable
+// } = require('stream');
+
+
+// class MyReadStream extends Readable {
+//   constructor() {
+//     super();
+//     this.i = 1
+//   }
+//   _read() {
+//     this.push(this.i++ + '  ');
+//     if (this.i === 5) {
+//       return this.push(null);
+//     }
+//   }
+// }
+
+
+// let myStream = new MyReadStream();
+// myStream.on('data', function (data) {
+//   console.log(data);
+// })
+
+// myStream.on('end', function() {
+//   console.log('end');
+// })
