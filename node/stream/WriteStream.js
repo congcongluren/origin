@@ -16,7 +16,7 @@ class WriteStream extends EventEmitter {
     this.needDrain = false;
     this.cache = [];
     this.writing = false; // first
-
+    this.offset = this.start;
     this.open();
 
   }
@@ -32,13 +32,12 @@ class WriteStream extends EventEmitter {
     chunk = Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk);
     this.len += chunk.length; // 字节空间的大小
     let returnValue = this.len < this.highWaterMark;
-
     this.needDrain = !returnValue;
 
     if (!this.writing) {
       // 第一次写入
       this.writing = true
-
+      this._write(chunk, encoding, cb);
     } else {
       this.cache.push({
         chunk,
@@ -50,5 +49,16 @@ class WriteStream extends EventEmitter {
     return returnValue;
   }
 
+  _write(chunk, encoding, cb) {
+    if (typeof this.fd !== 'number') {
+      return this.once('open', () => this._write(chunk, encoding, cb))
+    }
+    fs.write(this.fd, chunk, 0, chunk.length, this.offset, (err, written) => {
+      this.offset += written; // 维护偏移量
+      this.len -= written;
+      cb();
+      console.log(this.cache);
+    });
+  }
 }
 module.exports = WriteStream;

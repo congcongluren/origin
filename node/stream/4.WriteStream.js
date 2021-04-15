@@ -3,7 +3,7 @@ const path = require('path');
 const WriteStream = require('./WriteStream');
 
 const ws = new WriteStream(path.resolve(__dirname, './b.txt'), {
-  highWaterMark: 3,
+  highWaterMark: 4,
 
 })
 
