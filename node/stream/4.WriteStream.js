@@ -20,4 +20,4 @@ ws.on('drain', function () {
   write();
 })
 
-write();
+write(); 
