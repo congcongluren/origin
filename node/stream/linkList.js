@@ -71,17 +71,20 @@ class LinkList {
   }
 
   reverse() {
-    let head = this.head;
-    if (head ===null || head.next === null) return head;
+    let node = this.head;
+    if (node ===null || node.next === null) return node;
 
 
     let newHead = null;
-    while(head !== head){
-      let temp = head.next;
-      head.next = newHead;
-      newHead = head;
-      head = temp;
+    while(node !== null){
+      let temp = node.next;
+      node.next = newHead;
+      newHead = node;
+      node = temp;
     }
+
+    this.head = newHead;
+    return newHead;
   }
 
   reverse1() {
@@ -98,22 +101,27 @@ class LinkList {
 
 }
 
-
-let ll = new LinkList();
-
-ll.add(1)
-ll.add(2)
-ll.add(3)
-ll.add(4)
-ll.add(5)
-
-ll.add(2, 100);
-
-let a = ll.remove(2);
+module.exports = LinkList;
 
 
-ll.reverse()
+// let ll = new LinkList();
 
-console.dir(ll, {
-  depth: 100
-});
+// ll.add(1)
+// ll.add(2)
+// ll.add(3)
+// ll.add(4)
+// ll.add(5)
+
+// ll.add(2, 100);
+
+// let a = ll.remove(2);
+
+
+// console.dir(ll, {
+//   depth: 100
+// });
+// ll.reverse()
+
+// console.dir(ll, {
+//   depth: 100
+// });
