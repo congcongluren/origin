@@ -25,6 +25,21 @@ class ReadStream extends EventEmitter {
 
   }
 
+  pipe(ws) {
+    this.on('data', (data)=> {
+      let flag = ws.write(data);
+      console.log(flag, data);
+      if (!flag) {
+        this.pause();
+      }
+    })
+    
+    ws.on('drain', () => {
+      console.log('xxx');
+      this.resume();
+    })
+  }
+
   resume() {
     if (!this.flowing) {
       this.flowing = true;

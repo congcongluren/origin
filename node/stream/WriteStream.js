@@ -1,5 +1,6 @@
 const EventEmitter = require('events');
 const fs = require('fs');
+const Queue = require('./queue');
 
 class WriteStream extends EventEmitter {
   constructor(path, options = {}) {
@@ -14,7 +15,7 @@ class WriteStream extends EventEmitter {
 
     this.len = 0;
     this.needDrain = false;
-    this.cache = [];
+    this.cache = new Queue;
     this.writing = false; // first
     this.offset = this.start;
     this.open();
@@ -31,7 +32,7 @@ class WriteStream extends EventEmitter {
 
   clearBuffer() {
     console.log('clearBuffer', this.cache);
-    let data = this.cache.shift();
+    let data = this.cache.poll();
     if (data) {
       this._write(data.chunk, data.encoding, data.cb);
     } else {
@@ -66,7 +67,7 @@ class WriteStream extends EventEmitter {
 
     } else {
       console.log(chunk, '放入栈');
-      this.cache.push({
+      this.cache.offer({
         chunk,
         encoding,
         cb

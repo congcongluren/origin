@@ -48,17 +48,20 @@ class LinkList {
   }
 
   remove(index) {
+    if (this.size === 0) return null;
     let removeNode;
     if(index === 0) {
       removeNode = this.head;
-      this.head = this.head.next;
+      if (removeNode !== null) {  
+        this.head = this.head.next;
+      }
     }else {
       let prevNode = this._node(index - 1);
       removeNode = prevNode.next;
       prevNode.next = prevNode.next.next;
     }
     this.size--;
-    return removeNode.element;
+    return removeNode && removeNode.element;
 
   }
 
