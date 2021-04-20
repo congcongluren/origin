@@ -31,7 +31,6 @@ const {
 //           if (index === dirs.length) return fs.rmdir(dir, cb)
 //           rmdir(dirs[index++],step);
 //         }
-
 //         step();
 //       });
 //     } else {
@@ -39,7 +38,7 @@ const {
 //       fs.unlink(dir,cb);
 //     }
 //   })
-// }
+ 
 function rmdir(dir, cb) {
   fs.stat(dir, function (err, statObj) {
     if (!statObj) return;
