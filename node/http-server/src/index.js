@@ -4,8 +4,10 @@ const mime = require('mime');
 const ejs = require('ejs');
 const url = require('url');
 const path = require('path');
+const crypto = require('crypto');
+const zlib = require('zlib');
 const fs = require('fs').promises;
-const { createReadStream, readFileSync } = require('fs');
+const { createReadStream, readFileSync, stat } = require('fs');
 
 
 const { getIPAdress } = require('./util');
@@ -26,6 +28,8 @@ class Server {
       pathname
     } = url.parse(req.url);
 
+    res.setHeader('Cache-Control', 'max-age=10');
+
     pathname = decodeURIComponent(pathname); // 传过来的路径解码
 
     let requestFile = path.join(this.directory, pathname);
@@ -42,17 +46,68 @@ class Server {
         res.end(fileContent);
       } else {
         // 发送文件内容
-        this.sendFile(req,res,requestFile);
+        this.sendFile(req,res,requestFile, statObj);
       }
     } catch (e) {
       console.log(e);
       this.sendError(req, res, e);
     }
   }
-  sendFile(req,res,requestFile) {
+  cacheFile(req,res,requestFile, statObj){
+    res.setHeader('Cache-Control', 'max-age=10');
+    res.setHeader('Expires', new Date(Date.now() + 10 * 1000).toGMTString());
+
+    const lastMidfied = statObj.ctime.toGMTString();
+    const etag = crypto.createHash('md5').update(readFileSync(requestFile)).digest('base64');
+
+    res.setHeader('Last-Modified', lastMidfied);
+    res.setHeader('Etag', etag);
+
+    let ifModifiedSince = req.headers['if-modified-since'];
+    let ifNoneMatch = req.headers['if-none-match'];
+    
+    if (lastMidfied !== ifModifiedSince) {
+      console.log('最后修改时间不同');
+      return false;
+    }
+    
+    
+    if (ifNoneMatch !== etag) {
+      console.log('文件不同');
+      return false;
+    }
+
+
+    return true;
+
+  }
+  gzipFile(req,res,requestFile, statObj) {
+    let encodings = req.headers['accept-encoding'];
+    if (encodings) {
+      if (encodings.includes('gzip')) {
+        res.setHeader('Content-Encoding', 'gzip')
+        return zlib.createGzip();
+      } else if (encodings.includes('deflage')) {
+        res.setHeader('Content-Encoding', 'deflage');
+        return zlib.createDeflate();
+      }
+    }
+
+    return false;
+  }
+  sendFile(req,res,requestFile, statObj) {
+
+    // 看缓存
+    if(this.cacheFile(req,res,requestFile, statObj)) {
+      res.statusCode = 304;
+      return res.end();
+    }    
     // 返回文件时，配置请求头
     res.setHeader('Content-Type', mime.getType(requestFile) + ';charset=utf-8');
-    createReadStream(requestFile).pipe(res);
+    let createGzip;
+    if (createGzip = this.gzipFile(req,res,requestFile, statObj)) {
+      return createReadStream(requestFile).pipe(createGzip).pipe(res);
+    }
   }
   sendError(req, res, e) {
     res.statusCode = 404;
