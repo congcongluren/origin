@@ -103,26 +103,26 @@
 
 
 
-// function* read(val) {
-//   console.log(val);
+function* read(val) {
+  console.log(val);
 
-//   var a = yield 1;
-//   console.log('a',a);
-//   var b = yield 2;
-//   console.log('b',b);
-//   var c = yield 3;
-//   console.log('c',c);
-// }
+  var a = yield "1";
+  console.log('a',a);
+  var b = yield "2";
+  console.log('b',b);
+  var c = yield "3";
+  console.log('c',c);
+}
 
 
-// let it = read('origin');
-// it.next('1');
-// it.next('2');
-// it.next('3');
-// it.next('4');
-// it.next('5');
-// it.next('6');
-// it.next('7');
+let it = read('origin');
+it.next('1');
+it.next('2');
+it.next('3');
+it.next('4');
+it.next('5');
+it.next('6');
+it.next('7');
 
 
 
@@ -169,11 +169,11 @@
 // }
 
 
-const util = require('util');
-const fs = require('fs');
-// // const co = require('co');
+// const util = require('util');
+// const fs = require('fs');
+// // // const co = require('co');
 
-let readFile = util.promisify(fs.readFile);
+// let readFile = util.promisify(fs.readFile);
 
 // function* read() {
 //   let data = yield readFile('./a.txt', 'utf8');
@@ -223,13 +223,13 @@ let readFile = util.promisify(fs.readFile);
 
 
 
-async function read() {
-  let data = await readFile('./a.txt', 'utf8');
-  data = await readFile(data, 'utf8');
-  return data;
-}
+// async function read() {
+//   let data = await readFile('./a.txt', 'utf8');
+//   data = await readFile(data, 'utf8');
+//   return data;
+// }
 
-read().then(res => {
-  console.log(res);
+// read().then(res => {
+//   console.log(res);
   
-}) 
+// }) 
