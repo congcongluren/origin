@@ -22,41 +22,41 @@ console.log(it.next('7')); // { value: undefined, done: true }
 
 
 
-// var _marked = /*#__PURE__*/regeneratorRuntime.mark(read);
+var _marked = /*#__PURE__*/regeneratorRuntime.mark(read);
 
-// function read(val) {
-//   var a, b, c;
-//   return regeneratorRuntime.wrap(function read$(_context) {
-//     while (1) {
-//       switch (_context.prev = _context.next) {
-//         case 0:
-//           console.log(val);
-//           _context.next = 3;
-//           return "g1";
+function read(val) {
+  var a, b, c;
+  return regeneratorRuntime.wrap(function read$(_context) {
+    while (1) {
+      switch (_context.prev = _context.next) {
+        case 0:
+          console.log(val);
+          _context.next = 3;
+          return "g1";
 
-//         case 3:
-//           a = _context.sent;
-//           console.log('a', a);
-//           _context.next = 7;
-//           return "g2";
+        case 3:
+          a = _context.sent;
+          console.log('a', a);
+          _context.next = 7;
+          return "g2";
 
-//         case 7:
-//           b = _context.sent;
-//           console.log('b', b);
-//           _context.next = 11;
-//           return "g3";
+        case 7:
+          b = _context.sent;
+          console.log('b', b);
+          _context.next = 11;
+          return "g3";
 
-//         case 11:
-//           c = _context.sent;
-//           console.log('c', c);
+        case 11:
+          c = _context.sent;
+          console.log('c', c);
 
-//         case 13:
-//         case "end":
-//           return _context.stop();
-//       }
-//     }
-//   }, _marked);
-// }
+        case 13:
+        case "end":
+          return _context.stop();
+      }
+    }
+  }, _marked);
+}
 /**
  * regeneratorRuntime 对象，有mark方法，wrap方法
  * wrap的参数是个迭代器函数
@@ -68,54 +68,58 @@ console.log(it.next('7')); // { value: undefined, done: true }
 
 
 
-// let regeneratorRuntime = {
-//   mark(genFn) {
-//     return genFn
-//   },
-//   wrap(iteratorFn) {
-//     const context = {
-//       prev: 0,
-//       next: 0,
-//       done: false,
-//       stop() {
-//         this.done = true;
-//       }
-//     }
+let regeneratorRuntime = {
+  mark(genFn) {
+    return genFn
+  },
+  wrap(iteratorFn) {
+    const context = {
+      prev: 0,
+      next: 0,
+      done: false,
+      stop() {
+        this.done = true;
+      }
+    }
 
-//     let it = {};
+    let it = {};
 
-//     it.next = function (v) {
-//       context.sent = v;
-//       let value = iteratorFn(context);
-//       return {
-//         value,
-//         done: context.done
-//       }
-//     }
-
-
-//     return it;
-//   }
-// }
+    it.next = function (v) {
+      context.sent = v;
+      let value = iteratorFn(context);
+      return {
+        value,
+        done: context.done
+      }
+    }
 
 
+    return it;
+  }
+}
 
 
 
 
 
 
-// function co(it) {
-//   return new Promise((resolve, reject) => {
-//     function next(data) {
-//       let { value, done } = it.next(data);
-//       if (done) {
-//         resolve(value);
-//       } else {
-//         Promise.resolve(value).then(next,reject);
-//       }
-//     }
 
-//     next();
-//   })
-// }
+/**
+ * 
+ * @param {*} it 传个generator进来
+ * @returns 
+ */
+function co(it) {
+  return new Promise((resolve, reject) => {
+    function next(data) {
+      let { value, done } = it.next(data); // 调用generator的next方法；
+      if (done) { // 是否执行到最后一个next。
+        resolve(value); // 是的话，直接返回最终结果
+      } else {
+        Promise.resolve(value).then(next,reject); // 不是的话，判断是否是promise，递归调用，失败就reject
+      }
+    }
+
+    next(); // 开个调用的头
+  })
+}
