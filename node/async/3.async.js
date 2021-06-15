@@ -39,13 +39,24 @@ let regeneratorRuntime = {
   }
 }
 
+/**
+ * 
+ * @param {*} gen 迭代器
+ * @param {*} resolve promise的
+ * @param {*} reject promise的
+ * @param {*} _next 
+ * @param {*} _throw 
+ * @param {*} key 
+ * @param {*} arg 上一次next的返回值
+ * @returns 
+ */
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
   try {
-    var info = gen[key](arg); var value = info.value;
+    var info = gen[key](arg); var value = info.value; // 主要是，调用next方法，得到返回值是个对象，next的返回值
   } catch (error) {
     reject(error); return;
   }
-  if (info.done) {
+  if (info.done) { // 判断next是否执行完
     resolve(value);
   } else {
     Promise.resolve(value).then(_next, _throw);
@@ -59,12 +70,13 @@ function _asyncToGenerator(fn) {
   return function () {
     var self = this, args = arguments;
     return new Promise(function (resolve, reject) {
-      var gen = fn.apply(self, args);
+      var gen = fn.apply(self, args); // 调用wrap方法 得到一个带有next方法的对象
 
       function _next(value) {
+        // 主要传入了迭代器，promise的 resolve, reject
         asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
       }
-      function _throw(err) {
+      function _throw(err) { // 错误处理，不考虑这个
         asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
       }
       _next(undefined);
@@ -77,7 +89,7 @@ function read(_x) {  // 函数入口
 }
 
 function _read() {
-  _read = _asyncToGenerator(
+  _read = _asyncToGenerator( // 
     /*#__PURE__*/
     regeneratorRuntime.mark(function _callee(val) {
       var a, b, c;
