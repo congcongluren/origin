@@ -154,4 +154,22 @@ class Promise {
     }
 }
 
+
+let p = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        resolve(111)
+    }, 1000);
+})
+
+p.then(res => {
+    console.log(res);
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(222)
+        }, 1000);
+    })
+}).then(res => {
+    console.log(res);
+})
+
 module.exports = Promise;
