@@ -5,7 +5,6 @@ const REJECTED = "REJECTED";
 // 利用x的值来判断是调用promise2的resolve还是reject
 function resolvePromise(promise2, x, resolve, reject) {
   // 核心流程
-  // console.log(promise2, x, resolve, reject);
   if (promise2 === x) { // 返回的promise
     return reject(new TypeError('Chaining cycle detected for promise #<Promise>'))
   }
