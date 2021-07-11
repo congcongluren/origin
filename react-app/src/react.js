@@ -9,7 +9,7 @@ function createElement(type, config, children) {
 
   if (arguments.length > 3) {// 有多个儿子
     props.children = Array.prototype.slice.call(arguments, 2).map(wrapToVdom);
-  } else if (children) {
+  } else {
     props.children = wrapToVdom(children); // 字符串，数字，null，数组
   }
   return {

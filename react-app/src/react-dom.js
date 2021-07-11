@@ -41,19 +41,26 @@ function createDOM(vdom) {
   return dom;
 }
 
+
+// 初始化渲染
 function mountClassComponent(vdom) {
   let { type, props } = vdom;
   let classInstance = new type(props);
   let renderVdom = classInstance.render();
+  // todo 类组件更新
+  classInstance.oldRenderVdom  = vdom.oldRenderVdom = renderVdom; // 挂载的时候计算出虚拟dom，挂到实例上
   return createDOM(renderVdom);
 }
 
 function mountFunctionComponent(vdom) {
   let { type, props } = vdom;
   let renderVdom = type(props);
+  vdom.oldRenderVdom = renderVdom;
   return createDOM(renderVdom);
 }
 
+
+// 更新逻辑
 function reconcileChildren(childrenVdom, parentDOM) {
   for (let i = 0; i < childrenVdom.length; i++) {
     let childVdom = childrenVdom[i];
@@ -71,7 +78,7 @@ function updateProps(dom, oldProps, newProps) {
       }
 
     } else if (key.startsWith('on')) {//onClick
-      //dom[key.toLocaleLowerCase()]=newProps[key];//dom.onclick=handleClick
+      dom[key.toLocaleLowerCase()]=newProps[key];//dom.onclick=handleClick
       // addEvent(dom, key.toLocaleLowerCase(), newProps[key]);
     } else {
       if (newProps[key])
@@ -80,6 +87,28 @@ function updateProps(dom, oldProps, newProps) {
   }
 }
 
+/**
+ * 根据vdom返回真实dom
+ * @param {*} vdom 
+ */
+export function findDOM(vdom) {
+  // 类组件与函数组件有区别
+  let { type } = vdom;
+  let dom;
+  
+  if (typeof type === 'function') {
+    dom = findDOM(vdom.oldRenderVdom);
+  } else {
+    dom = vdom.dom;
+  }
+  return dom;
+}
+
+export function compareTwoVdom(parentDOM, oldVdom, newVdom) {
+  let oldDOM = findDOM(oldVdom);
+  let newDOM = createDOM(newVdom);
+  parentDOM.replaceChild(newDOM, oldDOM);
+}
 
 const ReactDOM = {
   render

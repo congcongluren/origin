@@ -1,6 +1,10 @@
 import React from './react';
 import ReactDOM from './react-dom';
 
+
+// import React from 'react';
+// import ReactDOM from 'react-dom';
+
 // let element = (
 //   <div className="title" style = {{color: 'red'}}>
 //     <span>hello</span>world
@@ -51,16 +55,33 @@ class Clock extends React.Component {
 class Counter extends React.Component {
   state = { number: 0 };
   handleClick = () => {
-    this.setState({
-      number: this.state.number + 1
+    this.setState({ number: this.state.number + 1 }, () => {
+      console.log('callback', this.state.number);
+      
     })
+    // this.setState({ number: this.state.number + 1 }, () => {
+    //   console.log('callback', this.state.number);
+      
+    // })
     console.log(this.state.number);
 
-    this.setState({
-      number: this.state.number + 1
-    })
-    console.log(this.state.number);
+    // this.setState({
+    //   number: this.state.number + 1
+    // })
+    // console.log(this.state.number);
 
+
+    // setTimeout(() => {
+    //   this.setState({
+    //     number: this.state.number + 1
+    //   })
+    //   console.log(this.state.number);
+  
+    //   this.setState({
+    //     number: this.state.number + 1
+    //   })
+    //   console.log(this.state.number);
+    // })
   }
   render() {
     return (
